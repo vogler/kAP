@@ -1,0 +1,121 @@
+\documentclass{llncs}
+
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage[pdftex]{hyperref}
+\usepackage{float}
+
+
+
+\ifpdf
+	\usepackage[pdftex]{graphicx}
+	\DeclareGraphicsExtensions{.pdf, .png, .jpg}
+\else
+	\usepackage[dvips]{graphicx}
+	\DeclareGraphicsExtensions{.eps}
+\fi
+
+\title{Visualization of 3D Gamma Probe Data on a Mobile Device}
+\author{Johannes Merkle \\ Ralf Vogler}
+\institute{Technische Universit\"at M\"unchen\\
+\email{merkle@in.tum.de \hspace vogler@in.tum.de}}
+
+\newcommand{\test}{\textbf{TEST}}
+\def\imgsize{3in}
+%
+% ein paar eigene Definitionen
+%
+
+\newtheorem{hypothesis}{Hypothese}
+
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the Operating Room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems. In this paper we present an approach that further improves the usability of such a system by attaching a handheld devices to the probe to avoid issues with hand-eye coordination of the user. The approach is then compared to other systems with similar goals and evaluated in a short usability user study.
+
+
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Usability of Intra-Operative Systems}
+
+IPCAI11Usability zusammenfassen, usability erklären, verweis auf declipsespect und brainlabding
+
+\\
+
+\subsection{sentinel lymphnode biopsy}
+
+slnb beschreiben Wendler2010EurJNuclMedMolImaging
+
+\\
+\subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}\\
+
+%beschreibung declipsespect 
+%Navab2008ISBINavigatedProbeOverview
+%Wendler2007MICCAIRecon
+%Wendler2010EurJNuclMedMolImaging
+
+The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times. When using the probe to measure the radioactivity of a tracer in the region of interested, the position, angle and measurements of the probe are collected. Based on this data, a 3D image of the radioactivity can be reconstructed.\\
+This image can then be used to show a video stream from the tracking cameras' position which is augmented in such a way that it shows the source of radioactivity. Another option is to show a virtual image from the probes' position.
+
+
+\subsection{Usability problem: hand-eye-coordination between probe and monitor}
+
+%skizze/bild
+%problematik erklären und veranschaulichen
+%\\
+
+When using the the declipseSPECT system, the surgeon needs to look at the screen to be able to see the radioactivity hotspots. At the same time he needs to see the patient to properly navigate the probe. This could lead to difficulties because he either needs to continously switch between looking at the patient and the screen or try to navigate the probe while looking at the scenery from the tracking cameras point of view, which might lead to issues with hand-eye coordination.
+We try to 
+
+\subsection{Approach}
+
+\\
+Visualization of acquired radiation data directly on a display attached to the probe.
+
+\section{Design}
+
+Mockup of Interface
+
+hauptsächlich darstellung von hotspots
+auch: activity + activity histogramm
+
+\section{Implementation}
+
+Hardware: iPod Touch 4G\\
+Development environment: Objective C in Xcode\\
+Used libraries: GoogleData for XML-processing\\
+Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
+(OpenGL basics, transformation matrices etc.)\\
+(lighting modes)\\
+Data exchange: XML from HTTP-Server in existing software\\
+
+\section{Tests}
+
+%evaluation with trained person(s)
+%
+%nur altes system
+%nur neues
+%kombiniert neues + video mode auf monitor
+
+For the usability evaluation we selected persons familiar with the declipseSPECT environment and let them use the system. We gave a task to be done using the modified declipseSPECT system afterwards asked them to fill out an evaluation questionnaire.\\
+The task was to focus all radioactivity hotspot in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation questionnaire was the SUS [TODO: Zitat] questionnaire and additional questions more directly related to the system. The additional questions were not used for determining the SUS score.\\
+The result of the evaluation was generally positive with an average SUS score of 79.16 of 100 points. The additional questions indicated that the way the iPod is attached to the probe could be improved.
+
+\section{Conclusion}
+
+
+Usability compared to previous system\\
+
+\bibliographystyle{alpha}
+\bibliography{ausarbeitung}
+
+\end{document}
