@@ -1,62 +1,41 @@
-\documentclass{llncs}
+\documentclass{scrartcl}
 
 \usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage[latin1]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage[latin1]{inputenc}
 \usepackage{amsmath}
 \usepackage[pdftex]{hyperref}
 \usepackage{float}
 
-
-
-\ifpdf
-	\usepackage[pdftex]{graphicx}
-	\DeclareGraphicsExtensions{.pdf, .png, .jpg}
-\else
-	\usepackage[dvips]{graphicx}
-	\DeclareGraphicsExtensions{.eps}
-\fi
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf, .png, .jpg}
 
 \title{Visualization of 3D Gamma Probe Data on a Mobile Device}
 \author{Johannes Merkle \\ Ralf Vogler}
-\institute{Technische Universit\"at M\"unchen\\
-\email{merkle@in.tum.de \hspace vogler@in.tum.de}}
+%\institute{Technische Universit\"at M\"unchen\\
+%\email{merkle@in.tum.de \hspace vogler@in.tum.de}}
 
-\newcommand{\test}{\textbf{TEST}}
-\def\imgsize{3in}
-%
-% ein paar eigene Definitionen
-%
-
-\newtheorem{hypothesis}{Hypothese}
-
-\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+%\def\imgsize{3in}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-
 The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the Operating Room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems. In this paper we present an approach that further improves the usability of such a system by attaching a handheld devices to the probe to avoid issues with hand-eye coordination of the user. The approach is then compared to other systems with similar goals and evaluated in a short usability user study.
-
-
 \end{abstract}
 
 \section{Introduction}
 
 \subsection{Usability of Intra-Operative Systems}
 
-IPCAI11Usability zusammenfassen, usability erklären, verweis auf declipsespect und brainlabding
-
-\\
+IPCAI11Usability zusammenfassen, usability erklï¿½ren, verweis auf declipsespect und brainlabding
 
 \subsection{sentinel lymphnode biopsy}
-
 slnb beschreiben Wendler2010EurJNuclMedMolImaging
 
-\\
-\subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}\\
+
+\subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}
 
 %beschreibung declipsespect 
 %Navab2008ISBINavigatedProbeOverview
@@ -70,22 +49,20 @@ This image can then be used to show a video stream from the tracking cameras' po
 \subsection{Usability problem: hand-eye-coordination between probe and monitor}
 
 %skizze/bild
-%problematik erklären und veranschaulichen
+%problematik erklï¿½ren und veranschaulichen
 %\\
 
 When using the the declipseSPECT system, the surgeon needs to look at the screen to be able to see the radioactivity hotspots. At the same time he needs to see the patient to properly navigate the probe. This could lead to difficulties because he either needs to continously switch between looking at the patient and the screen or try to navigate the probe while looking at the scenery from the tracking cameras point of view, which might lead to issues with hand-eye coordination.
 We try to 
 
 \subsection{Approach}
-
-\\
 Visualization of acquired radiation data directly on a display attached to the probe.
 
 \section{Design}
 
 Mockup of Interface
 
-hauptsächlich darstellung von hotspots
+hauptsï¿½chlich darstellung von hotspots
 auch: activity + activity histogramm
 
 \section{Implementation}
