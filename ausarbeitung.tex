@@ -7,6 +7,7 @@
 \DeclareGraphicsExtensions{.pdf, .png, .jpg}
 \usepackage{color}
 \usepackage{tikz}
+\usepackage{graphicx}
 
 \newcommand{\red}[1]{{\color{red} #1}}
 
@@ -36,6 +37,17 @@
 \end{tikzpicture}%
 %
 }%
+
+\newcommand{\graphic}[3][width=\linewidth] % options, label/filename, caption
+{
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[#1]{img/#2}
+    \caption{#3}
+    \label{fig:#2}
+  \end{figure}
+}
+\newcommand{\refFigure}[1]{figure \ref{fig:#1}}
 
 \title{Visualization of 3D Gamma Probe Data on a Mobile Device}
 \author{Johannes Merkle \\ Ralf Vogler}
@@ -68,7 +80,9 @@ Since medical devices are typically safety-critical, they must meet specific req
 
 
 \subsection{Sentinel lymph node biopsy}
-\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}
+\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}\\
+Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
+\graphic[scale=.7]{lymphatic-system}{The lymphatic system}
 
 
 \subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}
@@ -94,38 +108,49 @@ Visualization of acquired radiation data directly on a display attached to the p
 
 
 \section{Design}
-Mock-up of Interface
-haupts�chlich darstellung von hotspots
-auch: activity + activity histogramm
+A mock-up of the interface is shown in \refFigure{mockup} and the final version of the UI in \refFigure{screen-annotated}.
+\graphic[scale=.5]{mockup}{Mock-up of the user interface}
+\graphic[scale=.5]{screen-annotated}{Final version of the user interface with annotations}
+\red{haupts�chlich darstellung von hotspots
+auch: activity + activity histogramm}
 
 
 
 \section{Implementation}
 Hardware: iPod Touch 4G\\
 Development environment: Objective C in Xcode\\
-Used libraries: GoogleData for XML-processing\\
+Libraries: GoogleData for XML-processing\\
 Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
-(OpenGL basics, transformation matrices etc.)\\
-(lighting modes)\\
+\red{(OpenGL basics, transformation matrices etc.)\\
+(lighting modes)}\\
 Data exchange: XML from HTTP-Server in existing software\\
 
+\paragraph*{Data}
+An example for the transmitted XML is shown in \refFigure{data}. The client currently polls this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been sucessfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
+\graphic[scale=.5]{data}{Example for XML-data with annotations}
+
+\paragraph*{Visualization of data}
+Since there is no framework like glut, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
+\graphic[scale=.5]{sphere}{Wireframe sphere and its constituents}
 
 
 \section{Tests}
-%evaluation with trained person(s)
-%
-%nur altes system
-%nur neues
-%kombiniert neues + video mode auf monitor
-For the usability evaluation we selected persons familiar with the declipseSPECT environment and let them use the system. We gave a task to be done using the modified declipseSPECT system afterwards asked them to fill out an evaluation questionnaire.\\
-The task was to focus all radioactivity hotspot in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation questionnaire was the SUS [TODO: Zitat] questionnaire and additional questions more directly related to the system. The additional questions were not used for determining the SUS score.\\
+\paragraph*{Setup}
+The iPod touch had to be fixated on the probe, for which we used Velcro strips (see \refFigure{probe}). Since there are no cables, it can be easily removed if the additional display isn't needed.
+\graphic[scale=.5]{probe}{Attachment of the iPod to the probe}
+
+For the usability evaluation we selected persons familiar with the declipseSPECT environment and let them use the system. We gave a task to be done using the modified declipseSPECT system afterwards asked them to fill out an evaluation questionnaire.
+The task was to focus all radioactivity hotspot in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation questionnaire was the SUS [TODO: Zitat] questionnaire and additional questions more directly related to the system. The additional questions were not used for determining the SUS score.
 The result of the evaluation was generally positive with an average SUS score of 79.16 of 100 points. The additional questions indicated that the way the iPod is attached to the probe could be improved.
 
 
 
 \section{Conclusion}
-Usability compared to previous system\\
-
+Usability compared to previous system
+\paragraph*{Good feedback}
+Intuitive handling, good visualization
+\paragraph*{Further challenges}
+Sterility, adjustable display angle, evaluation by medical personnel
 
 
 \bibliographystyle{alpha}
