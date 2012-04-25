@@ -5,6 +5,37 @@
 \usepackage{float}
 \usepackage[pdftex]{graphicx}
 \DeclareGraphicsExtensions{.pdf, .png, .jpg}
+\usepackage{color}
+\usepackage{tikz}
+
+\newcommand{\red}[1]{{\color{red} #1}}
+
+% Command for inserting a todo item
+\newcommand{\todo}[1]{%
+% Add to todo list
+\addcontentsline{tdo}{todo}{\protect{#1}}%
+%
+\begin{tikzpicture}[remember picture, baseline=-0.75ex]%
+\node [coordinate] (inText) {};
+\end{tikzpicture}%
+%
+% Make the margin par
+\marginpar{%
+\begin{tikzpicture}[remember picture]%
+\definecolor{orange}{rgb}{1,0.5,0}
+\draw node[draw=black, fill=orange, text width = 2.5cm] (inNote)
+{#1};%
+\end{tikzpicture}%
+}%
+%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[draw = orange, thick]
+([yshift=-0.2cm] inText)
+-| ([xshift=-0.3cm] inNote.west)
+-| (inNote.west);
+\end{tikzpicture}%
+%
+}%
 
 \title{Visualization of 3D Gamma Probe Data on a Mobile Device}
 \author{Johannes Merkle \\ Ralf Vogler}
@@ -15,43 +46,58 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
+
 
 \begin{abstract}
-The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the Operating Room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems. In this paper we present an approach that further improves the usability of such a system by attaching a handheld device to the probe in order to avoid issues with hand-eye coordination of the user. The approach is then evaluated in a short usability user study.
+The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the operating room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems.\todo{Vorteil von FHSpect ist doch nicht unbedingt Usablity sondern Preis?} In this paper we present an approach that further improves the usability of such a system by attaching a handheld device to the probe in order to avoid issues with hand-eye coordination of the user. The approach is then evaluated in a short usability user study.
 \end{abstract}
+
 
 
 \section{Introduction}
 
-\subsection{Usability of intra-operative systems}
-IPCAI11Usability zusammenfassen, usability erkl�ren, verweis auf declipsespect und brainlabding
+
+\subsection{Usability of intra-operative systems}\todo{intra-operative systems?}
+\red{IPCAI11Usability zusammenfassen, usability erkl�ren, verweis auf declipsespect und brainlabding}
+\paragraph*{Usability for medical devices}
+The goal of usability engineering is to make a product more efficient to use, easier to learn and more satisfying for the user.
+
+Since medical devices are typically safety-critical, they must meet specific requirements for usability. Besides the usability factors, effectiveness, efficiency and satisfaction, they must also be safe. The software has to be intuitive, stable and easy to use. Before it can be used in the operating room a usability test in a special usability lab should be performed in order to simulate a typical user environment and situation.
+\paragraph*{Usability in Bezug auf declipseSPECT und Brainlab-Ding}
+
 
 \subsection{Sentinel lymph node biopsy}
-slnb beschreiben Wendler2010EurJNuclMedMolImaging
+\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}
+
 
 \subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}
 %beschreibung declipsespect 
 %Navab2008ISBINavigatedProbeOverview
 %Wendler2007MICCAIRecon
 %Wendler2010EurJNuclMedMolImaging
-The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times. When using the probe to measure the radioactivity of a tracer in the region of interested, the position, angle and measurements of the probe are collected. Based on this data, a 3D image of the radioactivity can be reconstructed.\\
+The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times. When using the probe to measure the radioactivity of a tracer in the region of interested, the position, angle and measurements of the probe are collected. Based on this data, a 3D image of the radioactivity can be reconstructed.
 This image can then be used to show a video stream from the tracking cameras' position which is augmented in such a way that it shows the source of radioactivity. Another option is to show a virtual image from the probes' position.
+
 
 \subsection{Usability problem: hand-eye-coordination between probe and monitor}
 %skizze/bild
 %problematik erkl�ren und veranschaulichen
 %\\
 When using the the declipseSPECT system, the surgeon needs to look at the screen to be able to see the radioactivity hotspots. At the same time he needs to see the patient to properly navigate the probe. This could lead to difficulties because he either needs to continuously switch between looking at the patient and the screen or try to navigate the probe while looking at the scenery from the tracking cameras point of view, which might lead to issues with hand-eye coordination.
-We try to 
+We try to ???
+
 
 \subsection{Approach}
 Visualization of acquired radiation data directly on a display attached to the probe.
+
 
 
 \section{Design}
 Mock-up of Interface
 haupts�chlich darstellung von hotspots
 auch: activity + activity histogramm
+
 
 
 \section{Implementation}
@@ -62,6 +108,7 @@ Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
 (OpenGL basics, transformation matrices etc.)\\
 (lighting modes)\\
 Data exchange: XML from HTTP-Server in existing software\\
+
 
 
 \section{Tests}
@@ -75,8 +122,11 @@ The task was to focus all radioactivity hotspot in a set of prerecorded demo dat
 The result of the evaluation was generally positive with an average SUS score of 79.16 of 100 points. The additional questions indicated that the way the iPod is attached to the probe could be improved.
 
 
+
 \section{Conclusion}
 Usability compared to previous system\\
+
+
 
 \bibliographystyle{alpha}
 \bibliography{ausarbeitung}
