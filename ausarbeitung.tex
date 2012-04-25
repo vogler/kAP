@@ -85,60 +85,60 @@ Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
 \graphic[scale=.7]{lymphatic-system}{The lymphatic system}
 
 
-\subsection{declipseSPECT (freehand spect) -> comparison with SPECT/CT}
+\subsection{declipseSPECT - a freehand SPECT system}
 %beschreibung declipsespect 
 %Navab2008ISBINavigatedProbeOverview
 %Wendler2007MICCAIRecon
 %Wendler2010EurJNuclMedMolImaging
-The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the meassured radition can be computed.
+\paragraph*{Usage}
+The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is meassured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation.
+Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training efforts (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
+\paragraph*{Setup}
+The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the meassured radition can be computed.
 This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probes' position (3D view).
 The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the cameras (two infrared for tracking, one video) and has a touch-screen attached to it, which is used for both the visualization and user input. The declipseSPECT stationary system is shown in \refFigure{declipseSPECT} and \refFigure{declipseSPECT-OR} shows how it is used in the operating room.
 \graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system}
 \graphic[scale=.7]{declipseSPECT-OR}{declipseSPECT in the operating room}
 
 
-\subsection{Usability problem: hand-eye-coordination between probe and monitor}
+\subsection{Usability problem: hand-eye-coordination between probe and display}
 %skizze/bild
 %problematik erkl�ren und veranschaulichen
 %\\
-When using the the declipseSPECT system, the surgeon needs to look at the screen to be able to see the radioactivity hotspots. At the same time he needs to see the patient to properly navigate the probe. This could lead to difficulties because he either needs to continuously switch between looking at the patient and the screen or try to navigate the probe while looking at the screen which shows the scenery from the tracking cameras point of view, which might lead to issues with hand-eye coordination.
+When using the the declipseSPECT system, the surgeon needs to look at the screen to be able to see the radioactive hotspots. At the same time he needs to see the patient to properly navigate the probe. This could lead to difficulties because he either needs to continuously switch between looking at the patient and the screen or try to navigate the probe while looking at the screen which shows the scenery from the tracking cameras' point of view, which might lead to issues with hand-eye coordination.
 In this paper we introduce an addition to the declipseSPECT system that tries to solve this problem.
 
 
 \subsection{Approach}
-
 %Visualization of acquired radiation data directly on a display attached to the probe.
-
-Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeons' field of view. 
-
-
-
-\section{Design}
-A mock-up of the interface is shown in \refFigure{mockup} and the final version of the UI in \refFigure{screen-annotated}.
-\graphic[scale=.5]{mockup}{Mock-up of the user interface}
-\graphic[scale=.5]{screen-annotated}{Final version of the user interface with annotations}
-\red{haupts�chlich darstellung von hotspots
-auch: activity + activity histogramm}
+Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so that the data is always in the surgeon's field of view. 
 
 
 
 \section{Implementation}
+
+\subsection{Overview}
 Hardware: iPod Touch 4G\\
-Development environment: Objective C in Xcode\\
+Development environment: Objective C in Xcode, C++ in Visual Studio\\
 Libraries: GoogleData for XML-processing\\
 Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
 \red{(OpenGL basics, transformation matrices etc.)\\
 (lighting modes)}\\
 Data exchange: XML from HTTP-Server in existing software\\
-
-\paragraph*{Overview}
 \graphic[scale=.8]{sequence-diagram}{Sequence diagram}
 
-\paragraph*{Data}
+
+\subsection{Design}
+A mock-up of the interface is shown in \refFigure{mockup} and the final version of the UI in \refFigure{screen-annotated}.
+\graphic[scale=.5]{mockup}{Mock-up of the user interface}
+\graphic[scale=.5]{screen-annotated}{Final version of the user interface with annotations}
+
+
+\subsection{Integration with the existing software}
 An example for the transmitted XML is shown in \refFigure{data}. The client currently polls this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been sucessfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
 \graphic[scale=.5]{data}{Example for XML-data with annotations}
 
-\paragraph*{Visualization of data}
+\subsection{Visualization of data}
 Since there is no framework like glut, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
 
 The signature of the function looks as follows:
@@ -153,6 +153,7 @@ initSolidSphere(Vertex3D **triangleStripVertexHandle,
     GLuint slices, GLuint stacks)
 \end{verbatim}
 \graphic[scale=.5]{sphere}{Wireframe sphere and its constituents}
+
 
 
 \section{Tests}
