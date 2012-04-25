@@ -40,7 +40,7 @@
 
 \newcommand{\graphic}[3][width=\linewidth] % options, label/filename, caption
 {
-  \begin{figure}[ht]
+  \begin{figure}[h!t]
     \centering
     \includegraphics[#1]{img/#2}
     \caption{#3}
@@ -75,7 +75,7 @@ The usability of a system is an important factor of its success, especially if t
 \paragraph*{Usability for medical devices}
 The goal of usability engineering is to make a product more efficient to use, easier to learn and more satisfying for the user.
 
-Since medical devices are typically safety-critical, they must meet specific requirements for usability. Besides the usability factors, effectiveness, efficiency and satisfaction, they must also be safe. The software has to be intuitive, stable and easy to use. Before it can be used in the operating room a usability test in a special usability lab should be performed in order to simulate a typical user environment and situation.
+Since medical devices are typically safety-critical, they must meet specific requirements for usability. Besides the usability factors effectiveness, efficiency and satisfaction, they must also be safe. The software has to be intuitive, stable and easy to use. Before it can be used in the operating room a usability test in a special usability lab should be performed in order to simulate a typical user environment and situation.
 \paragraph*{Usability in Bezug auf declipseSPECT und Brainlab-Ding}
 
 
@@ -90,9 +90,11 @@ Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
 %Navab2008ISBINavigatedProbeOverview
 %Wendler2007MICCAIRecon
 %Wendler2010EurJNuclMedMolImaging
-The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times. When using the probe to measure the radioactivity of a tracer in the region of interested, the position, angle and measurements of the probe are collected. Based on this data, a 3D image of the source of the radioactivity can be reconstructed.
-This image can then be used to show a video stream from the tracking cameras' position which is augmented in such a way that it shows the source of radioactivity (camera view). Another option is to show a virtual image from the probes' position (3D view).
-The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the tracking cameras and has a touch-screen attached to it, which is used for both the visualization and user input. 
+The declipseSPECT system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the meassured radition can be computed.
+This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probes' position (3D view).
+The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the cameras (two infrared for tracking, one video) and has a touch-screen attached to it, which is used for both the visualization and user input. The declipseSPECT stationary system is shown in \refFigure{declipseSPECT} and \refFigure{declipseSPECT-OR} shows how it is used in the operating room.
+\graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system}
+\graphic[scale=.7]{declipseSPECT-OR}{declipseSPECT in the operating room}
 
 
 \subsection{Usability problem: hand-eye-coordination between probe and monitor}
@@ -129,12 +131,27 @@ Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
 (lighting modes)}\\
 Data exchange: XML from HTTP-Server in existing software\\
 
+\paragraph*{Overview}
+\graphic[scale=.8]{sequence-diagram}{Sequence diagram}
+
 \paragraph*{Data}
 An example for the transmitted XML is shown in \refFigure{data}. The client currently polls this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been sucessfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
 \graphic[scale=.5]{data}{Example for XML-data with annotations}
 
 \paragraph*{Visualization of data}
 Since there is no framework like glut, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
+
+The signature of the function looks as follows:
+\begin{verbatim}
+initSolidSphere(Vertex3D **triangleStripVertexHandle,
+    Vector3D **triangleStripNormalHandle,
+    GLuint *triangleStripVertexCount,
+    Vertex3D **triangleFanVertexHandle,
+    Vector3D **triangleFanNormalHandle,
+    GLuint *triangleFanVertexCount,
+    GLfloat radius,
+    GLuint slices, GLuint stacks)
+\end{verbatim}
 \graphic[scale=.5]{sphere}{Wireframe sphere and its constituents}
 
 
