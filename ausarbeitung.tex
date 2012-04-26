@@ -94,7 +94,7 @@ Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
 The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is meassured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation.
 Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training efforts (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
 \paragraph*{Setup}
-The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the meassured radition can be computed.
+The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the measured radiation can be computed.
 This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probes' position (3D view).
 The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the cameras (two infrared for tracking, one video) and has a touch-screen attached to it, which is used for both the visualization and user input. The declipseSPECT stationary system is shown in \refFigure{declipseSPECT} and \refFigure{declipseSPECT-OR} shows how it is used in the operating room.
 \graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system}
@@ -109,7 +109,7 @@ In this paper we introduce an addition to the declipseSPECT system that tries to
 
 
 \subsection{Approach}
-Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeons' field of view. In order to be properly integrated into the system, the screen mustn't be too big and attached to the probe in a way that obstructs the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactivity hotspot, the currently measured radiation (cps) and a histogram of the previously measured radiation.
+Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeon's field of view. In order to be properly integrated into the system, the screen mustn't be too big and attached to the probe in a way that obstructs the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactive hotspot, the currently measured radiation (cps) and a histogram of the previously measured radiation.
 
 
 
@@ -124,23 +124,23 @@ Our approach is to visualize the important data from the terminal screen on a sc
 %(lighting modes)}\\
 %Data exchange: XML from HTTP-Server in existing software\\
 We used an iPod Touch 4G which we attached to probe (see \refFigure{probe}) in order to display the most important data of the existing software.
-The iPod Touch was chosen because it is relativily cheap, has good hardware and a good development environment. Furthermore it has exactly the right size for attachment on the probe and it also has a built-in camera. We originally planned to use the camera's image as a background of the application which showed to be not practially because of calibration and because the display couldn't be attached in a way that one could see the content and it wouldn't occlude the markers.
+The iPod Touch was chosen because it is relatively cheap, has good hardware and a good development environment. Furthermore it has the right size for attachment on the probe and it also has a built-in camera. We originally planned to use the camera's image as a background of the application which showed to be not practically because of calibration and because the display couldn't be attached in a way that one could see the content and it wouldn't occlude the markers.
 
 Most of the development was done in Objective C in Xcode for the software on the iPod and C++ in Visual Studio for the server software.
 
-Communication between the iPod (client) and the declipseSPECT software (server) works via WLAN which means that there aren't any cables and the display can simply be attached to the probe when needed. The connection parameters can be modified in the settings page of the application.
-An overview of the communication is shown in \refFigure{sequence-diagram}. It is important to note that the data is polled in its own loop. First the OpenGL view, which is behind the other UI elements, is setup and a timer for \verb|loadValuesFromXML| is started. After this the loop for drawing the content starts, i.e. \verb|drawView| is constantly called. The timer executes \verb|loadValuesFromXML| in a certain interval (currently 20Hz) which loads the current values from the server, parses the XML and updates the UI. The spheres which visualize the radiactive hotspots are created and stored in a list which is then read during \verb|drawView|.
+Communication between the iPod (client) and the declipseSPECT software (server) works via WLAN which means that there aren't any additional cables and the display can simply be attached to the probe when needed. The connection parameters can be modified in the settings page of the application.
+An overview of the communication is shown in \refFigure{sequence-diagram}. It is important to note that the data is retrieved in its own loop. First the OpenGL view, which is behind the other UI elements, is setup and a timer for \verb|loadValuesFromXML| is started. After this the loop for drawing the content starts, i.e. \verb|drawView| is constantly called. The timer executes \verb|loadValuesFromXML| in a certain interval (currently 20Hz) which loads the current values from the server, parses the XML and updates the UI. The spheres which visualize the radioactive hotspots are created and stored in a list which is then read during \verb|drawView|.
 \graphic[scale=.8]{sequence-diagram}{Sequence diagram}
 
 
 \subsection{Design}
-A mock-up of the interface is shown in \refFigure{mockup} and the final version of the UI in \refFigure{screen-annotated}. Elements like the distance meassure and the crosshair were recommended during evaluation and added afterwards.
+A mock-up of the interface is shown in \refFigure{mockup} and the final version of the UI in \refFigure{screen-annotated}. Elements like the distance to the nearest hotspot and the cross-hair were recommended during evaluation and added afterwards.
 \graphic[scale=.5]{mockup}{Mock-up of the user interface}
 \graphic[scale=.5]{screen-annotated}{Final version of the user interface with annotations}
 
 
 \subsection{Integration with the existing software}
-An example for the transmitted XML is shown in \refFigure{data}. The client currently polls this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been sucessfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
+An example for the transmitted XML is shown in \refFigure{data}. The client currently requests this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been successfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
 For XML-processing the GoogleData library was used which provides a more convenient wrapper around NSXML which also supports XPath.
 \graphic[scale=.5]{data}{Example for XML-data with annotations}
 
