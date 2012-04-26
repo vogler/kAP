@@ -141,12 +141,14 @@ A mock-up of the interface is shown in \refFigure{mockup} and the final version 
 
 \subsection{Integration with the existing software}
 An example for the transmitted XML is shown in \refFigure{data}. The client currently polls this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been sucessfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
-%Libraries: GoogleData for XML-processing\\
+For XML-processing the GoogleData library was used which provides a more convenient wrapper around NSXML which also supports XPath.
 \graphic[scale=.5]{data}{Example for XML-data with annotations}
 
+
 \subsection{Visualization of data}
-%Visualization: OpenGL ES 1.1 (without vertex and fragment shaders)\\
+Visualization was done using OpenGL ES 1.1 which runs on all generations of the iPod Touch. OpenGL ES 2.0 uses vertex and fragment shaders but needs a certain version of iOS and only works on 3rd generation and newer.
 Since there is no framework like glut, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
+The difference between fans and strips is shown in \refFigure{sphere}.
 
 The signature of the function looks as follows:
 \begin{verbatim}
@@ -175,11 +177,10 @@ The result of the evaluation was generally positive with an average SUS score of
 
 
 \section{Conclusion}
-Usability compared to previous system
-\paragraph*{Good feedback}
-Intuitive handling, good visualization
-\paragraph*{Further challenges}
-Sterility, adjustable display angle, evaluation by medical personnel
+The evaluation indicated that the usability compared to the previous system could be improved. The feedback was generally positive, especially the intuitive handling and visualization.
+Further challenges would be the introduction in the operating room which requires everything to be sterile (extra enclosing could make the display too bulky or the touch screen unresponsive), stable and self explanatory.
+The attachment of the display using Velcro strips is practical but it doesn't allow the angle to be adjusted. On the other hand, if the angle is adjustable, the display might be problematic for marker detection or make the probe inconvenient to hold.
+On top, all this should be evaluated by medical personnel which knows what is important to them.
 
 
 \bibliographystyle{alpha}
