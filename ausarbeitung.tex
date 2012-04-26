@@ -92,11 +92,11 @@ Since medical devices are typically safety-critical, they must meet specific req
 %Wendler2010EurJNuclMedMolImaging
 %http://www.surgiceye.com/index.php?option=com_content&view=article&id=60&Itemid=66
 \paragraph*{Usage}
-The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is meassured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation \cite{wendler}.
-Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training efforts (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
+The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is measured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation \cite{wendler}.
+Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training effort (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
 \paragraph*{Setup}
 The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the measured radiation can be computed.
-This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probes' position (3D view).
+This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probe's position (3D view).
 The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the cameras (two infrared for tracking, one video) and has a touch-screen attached to it, which is used for both the visualization and user input. The declipseSPECT stationary system is shown in \refFigure{declipseSPECT} and \refFigure{declipseSPECT-OR} shows how it is used in the operating room.
 \graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system}
 \graphic[scale=.7]{declipseSPECT-OR}{declipseSPECT in the operating room}
@@ -110,7 +110,7 @@ In this paper we introduce an addition to the declipseSPECT system that tries to
 
 
 \subsection{Approach}
-Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeon's field of view. In order to be properly integrated into the system, the screen mustn't be too big and attached to the probe in a way that obstructs the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactive hotspot, the currently measured radiation (cps) and a histogram of the previously measured radiation.
+Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeon's field of view. In order to be properly integrated into the system, the screen mustn't be too big and needs to be attached to the probe in a way that doesn't obstruct the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactive hotspot, the currently measured radiation (cps) and a histogram of the previously measured radiation.
 
 
 
@@ -125,12 +125,12 @@ Our approach is to visualize the important data from the terminal screen on a sc
 %(lighting modes)}\\
 %Data exchange: XML from HTTP-Server in existing software\\
 We used an iPod Touch 4G which we attached to the probe (see \refFigure{probe}) in order to display the most important data of the existing software.
-The iPod Touch was chosen because it is relatively cheap, has good hardware and a good development environment. Furthermore it has the right size for attachment on the probe and it also has a built-in camera. We originally planned to use the camera's image as a background of the application which showed to be not practically because of calibration and because the display couldn't be attached in a way that one could see the content and it wouldn't occlude the markers.
+The iPod Touch was chosen because it is relatively cheap, has good hardware and a good development environment. Furthermore it has the right size for attachment on the probe and it also has a built-in camera. We originally planned to use the camera's image as a background of the application which however proved impractically because of calibration and because the display couldn't be attached in a way that one could see the content and it wouldn't occlude the markers.
 
 Most of the development was done in Objective C in Xcode for the software on the iPod and C++ in Visual Studio for the software on the server.
 
-Communication between the iPod (client) and the declipseSPECT software (server) works via WLAN which means that there aren't any additional cables and the display can simply be attached to the probe when needed. The connection parameters can be modified in the settings page of the application.
-An overview of the communication is shown in \refFigure{sequence-diagram}. It is important to note that the data is retrieved in its own loop. First the OpenGL view, which is behind the other UI elements, is setup and a timer for \verb|loadValuesFromXML| is started. After this the loop for drawing the content starts, i.e. \verb|drawView| is constantly called. The timer executes \verb|loadValuesFromXML| in a certain interval (currently 20Hz) which loads the current values from the server, parses the XML and updates the UI. The spheres which visualize the radioactive hotspots are created and stored in a list which is then read during \verb|drawView|.
+Communication between the iPod (client) and the declipseSPECT software (server) works via WIFI which means that there aren't any additional cables and the display can simply be attached to the probe when needed. The connection parameters can be modified in the settings page of the application.
+An overview of the communication is shown in \refFigure{sequence-diagram}. It is important to note that the data is retrieved in its own loop. The OpenGL view, which is behind the other UI elements, is set up first and a timer for \verb|loadValuesFromXML| is started. After this the loop for drawing the content starts, i.e. \verb|drawView| is constantly called. The timer executes \verb|loadValuesFromXML| in a certain interval (currently 20Hz) which loads the current values from the server, parses the XML and updates the UI. The spheres which visualize the radioactive hotspots are created and stored in a list which is then read during \verb|drawView|.
 \graphic[scale=.8]{sequence-diagram}{Sequence diagram}
 
 
@@ -174,7 +174,7 @@ The iPod touch had to be fixated on the probe, for which we used Velcro strips (
 \graphic[scale=.5]{probe}{Attachment of the iPod to the probe}
 
 For the usability evaluation we selected persons familiar with the declipseSPECT environment and let them use the system. We gave a task to be done using the modified declipseSPECT system and asked them afterwards to fill out an evaluation questionnaire.
-The task was to focus all radioactive hotspots in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation was done using the SUS \cite{sus} questionnaire and additional questions which were more related to the system. The additional questions were not used for determining the SUS score.
+The task was to focus all radioactive hotspots in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation was done using the SUS \cite{sus} questionnaire and additional questions which were more specific to the system. The additional questions were not used for determining the SUS score.
 The result of the evaluation was generally positive with an average SUS score of 79.16 out of 100 points. The additional questions indicated that the way the iPod is attached to the probe could be improved.
 
 
@@ -183,7 +183,7 @@ The result of the evaluation was generally positive with an average SUS score of
 The evaluation indicated that the usability compared to the previous system could be improved. The feedback was generally positive, especially the intuitive handling and visualization.
 Further challenges would be the introduction in the operating room which requires everything to be sterile (extra enclosing could make the display too bulky or the touch screen unresponsive), stable and self explanatory.
 The attachment of the display using Velcro strips is practical but it doesn't allow the angle to be adjusted. On the other hand, if the angle is adjustable, the display might be problematic for marker detection or make the probe inconvenient to hold.
-On top, all this should be evaluated by medical personnel which knows what is important to them.
+On top, all this should be evaluated by medical personnel that know what is important in such a system.
 
 
 \bibliographystyle{unsrt}
