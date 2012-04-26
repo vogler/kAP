@@ -58,11 +58,11 @@
 
 \begin{document}
 \maketitle
-\tableofcontents
+%\tableofcontents
 
 
 \begin{abstract}
-The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the operating room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems.\todo{Vorteil von FHSpect ist doch nicht unbedingt Usablity sondern Preis?} In this paper we present an approach that further improves the usability of such a system by attaching a handheld device to the probe in order to avoid issues with hand-eye coordination of the user. The approach is then evaluated in a short usability user study.
+The usability of a system is an important factor of its success, especially if the system is used in a complex environment like the operating room. Therefore there has been a lot of research and many new developments in this field recently, like tracked probes in freehand SPECT systems. In this paper we present an approach that further improves the usability of such a system by attaching a handheld device to the probe in order to avoid issues with hand-eye coordination of the user. The approach is then evaluated in a short usability user study.
 \end{abstract}
 
 
@@ -70,18 +70,19 @@ The usability of a system is an important factor of its success, especially if t
 \section{Introduction}
 
 
-\subsection{Usability of intra-operative systems}\todo{intra-operative systems?}
-\red{IPCAI11Usability zusammenfassen, usability erkl�ren, verweis auf declipsespect und brainlabding}
-\paragraph*{Usability for medical devices}
+\subsection{Usability for medical devices}
+%\red{IPCAI11Usability zusammenfassen, usability erkl�ren, verweis auf declipsespect und brainlabding}
 The goal of usability engineering is to make a product more efficient to use, easier to learn and more satisfying for the user.
 
-Since medical devices are typically safety-critical, they must meet specific requirements for usability. Besides the usability factors effectiveness, efficiency and satisfaction, they must also be safe. The software has to be intuitive, stable and easy to use. Before it can be used in the operating room a usability test in a special usability lab should be performed in order to simulate a typical user environment and situation.
-\paragraph*{Usability in Bezug auf declipseSPECT und Brainlab-Ding}
+Since medical devices are typically safety-critical, they must meet specific requirements for usability. Besides the usability factors effectiveness, efficiency and satisfaction, they must also be safe. The software has to be intuitive, stable and easy to use. Before it can be used in the operating room a usability test in a special usability lab should be performed in order to simulate a typical user environment and situation \cite{bigdelou}.
+%\paragraph*{Usability in Bezug auf declipseSPECT und Brainlab-Ding}
 
 
 \subsection{Sentinel lymph node biopsy}
-\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}\\
-Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
+%\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}\\
+% http://www.cancer.gov/cancertopics/factsheet/detection/sentinel-node-biopsy
+% http://www.bupa.co.uk/individuals/health-information/directory/s/slnb
+The lymphatic system is shown in \refFigure{lymphatic-system}.
 \graphic[scale=.7]{lymphatic-system}{The lymphatic system}
 
 
@@ -91,8 +92,8 @@ Bla bla, see lymphatic system shown in \refFigure{lymphatic-system}.
 %Wendler2010EurJNuclMedMolImaging
 %http://www.surgiceye.com/index.php?option=com_content&view=article&id=60&Itemid=66
 \paragraph*{Usage}
-The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is meassured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation.
-Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training efforts (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
+The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is meassured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation \cite{wendler}.
+Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training efforts (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
 \paragraph*{Setup}
 The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the measured radiation can be computed.
 This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probes' position (3D view).
@@ -123,10 +124,10 @@ Our approach is to visualize the important data from the terminal screen on a sc
 %\red{(OpenGL basics, transformation matrices etc.)\\
 %(lighting modes)}\\
 %Data exchange: XML from HTTP-Server in existing software\\
-We used an iPod Touch 4G which we attached to probe (see \refFigure{probe}) in order to display the most important data of the existing software.
+We used an iPod Touch 4G which we attached to the probe (see \refFigure{probe}) in order to display the most important data of the existing software.
 The iPod Touch was chosen because it is relatively cheap, has good hardware and a good development environment. Furthermore it has the right size for attachment on the probe and it also has a built-in camera. We originally planned to use the camera's image as a background of the application which showed to be not practically because of calibration and because the display couldn't be attached in a way that one could see the content and it wouldn't occlude the markers.
 
-Most of the development was done in Objective C in Xcode for the software on the iPod and C++ in Visual Studio for the server software.
+Most of the development was done in Objective C in Xcode for the software on the iPod and C++ in Visual Studio for the software on the server.
 
 Communication between the iPod (client) and the declipseSPECT software (server) works via WLAN which means that there aren't any additional cables and the display can simply be attached to the probe when needed. The connection parameters can be modified in the settings page of the application.
 An overview of the communication is shown in \refFigure{sequence-diagram}. It is important to note that the data is retrieved in its own loop. First the OpenGL view, which is behind the other UI elements, is setup and a timer for \verb|loadValuesFromXML| is started. After this the loop for drawing the content starts, i.e. \verb|drawView| is constantly called. The timer executes \verb|loadValuesFromXML| in a certain interval (currently 20Hz) which loads the current values from the server, parses the XML and updates the UI. The spheres which visualize the radioactive hotspots are created and stored in a list which is then read during \verb|drawView|.
@@ -171,7 +172,7 @@ The iPod touch had to be fixated on the probe, for which we used Velcro strips (
 \graphic[scale=.5]{probe}{Attachment of the iPod to the probe}
 
 For the usability evaluation we selected persons familiar with the declipseSPECT environment and let them use the system. We gave a task to be done using the modified declipseSPECT system and asked them afterwards to fill out an evaluation questionnaire.
-The task was to focus all radioactive hotspots in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation was done using the SUS [TODO: Zitat] questionnaire and additional questions which were more related to the system. The additional questions were not used for determining the SUS score.
+The task was to focus all radioactive hotspots in a set of prerecorded demo data not using the terminal screen but only the screen attached to the probe. Additionally the slider was to be used to set a suitable sphere size to properly display the data. The evaluation was done using the SUS \cite{sus} questionnaire and additional questions which were more related to the system. The additional questions were not used for determining the SUS score.
 The result of the evaluation was generally positive with an average SUS score of 79.16 out of 100 points. The additional questions indicated that the way the iPod is attached to the probe could be improved.
 
 
@@ -183,7 +184,7 @@ The attachment of the display using Velcro strips is practical but it doesn't al
 On top, all this should be evaluated by medical personnel which knows what is important to them.
 
 
-\bibliographystyle{alpha}
+\bibliographystyle{unsrt}
 \bibliography{ausarbeitung}
 
 \end{document}
