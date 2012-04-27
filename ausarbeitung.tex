@@ -147,7 +147,7 @@ A mock-up of the interface for our application is shown in \refFigure{mockup} an
 
 \subsection{Integration with the existing software}
 An example for the transmitted XML is shown in \refFigure{data}. The client currently requests this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been successfully tested with up to 50Hz, which didn't show any noticable performance impact on the client nor the server.
-For XML-processing on iOS the GoogleData library was used which provides a more convenient wrapper around NSXML which also supports XPath.
+For XML-processing on iOS the Google Data client library \cite{gdata} was used which provides a more convenient wrapper around NSXML which also supports XPath.
 The part on the server uses Qt \cite{qt} and Eigen \cite{eigen} for matrices. The server also modifies the camera matrix because OpenGL uses a different coordinate system and expects a transposed matrix which is shown below:
 \begin{verbatim}
 // get the transformation of the probe in voi coordinates
