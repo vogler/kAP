@@ -78,12 +78,13 @@ Since medical devices are typically safety-critical, they must meet specific req
 %\paragraph*{Usability in Bezug auf declipseSPECT und Brainlab-Ding}
 
 
-%\subsection{Sentinel lymph node biopsy}
+\subsection{Sentinel lymph node biopsy}
 %\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}\\
 % http://www.cancer.gov/cancertopics/factsheet/detection/sentinel-node-biopsy
 % http://www.bupa.co.uk/individuals/health-information/directory/s/slnb
-%The lymphatic system is shown in \refFigure{lymphatic-system}.
-%\graphic[scale=.7]{lymphatic-system}{The lymphatic system}
+
+The lymphatic system is shown in \refFigure{lymphatic-system}.
+\graphic[scale=.7]{lymphatic-system}{The lymphatic system}
 
 
 \subsection{declipseSPECT - a freehand SPECT system}
@@ -93,13 +94,13 @@ Since medical devices are typically safety-critical, they must meet specific req
 %http://www.surgiceye.com/index.php?option=com_content&view=article&id=60&Itemid=66
 \paragraph*{Usage}
 The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is measured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation \cite{wendler}.
-Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training effort (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs.
+Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training effort (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs \cite{surgiceye}.
 \paragraph*{Setup}
 The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the measured radiation can be computed.
 This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probe's position (3D view).
 The system consists of the tracked probe, a tracking marker on the patient and a terminal that holds the cameras (two infrared for tracking, one video) and has a touch-screen attached to it, which is used for both the visualization and user input. The declipseSPECT stationary system is shown in \refFigure{declipseSPECT} and \refFigure{declipseSPECT-OR} shows how it is used in the operating room.
-\graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system}
-\graphic[scale=.7]{declipseSPECT-OR}{declipseSPECT in the operating room}
+\graphic[scale=.7]{declipseSPECT}{declipseSPECT stationary system \cite{surgiceye}}
+\graphic[scale=.7]{declipseSPECT-OR}{declipseSPECT in the operating room \cite{surgiceye}}
 
 
 \subsection{Usability problem: hand-eye-coordination between probe and display}
@@ -143,8 +144,20 @@ A mock-up of the interface for our application is shown in \refFigure{mockup} an
 
 
 \subsection{Integration with the existing software}
-An example for the transmitted XML is shown in \refFigure{data}. The client currently requests this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been successfully tested with up to 50Hz, which didn't show any remarkable performance impact on the client nor the server.
-For XML-processing the GoogleData library was used which provides a more convenient wrapper around NSXML which also supports XPath.
+An example for the transmitted XML is shown in \refFigure{data}. The client currently requests this data 20 times per second (enough for fluid visualization) and the server responds with the current values each time. The system has been successfully tested with up to 50Hz, which didn't show any noticable performance impact on the client nor the server.
+For XML-processing on iOS the GoogleData library was used which provides a more convenient wrapper around NSXML which also supports XPath.
+The part on the server uses Qt \cite{qt} and Eigen \cite{eigen} for matrices. The server also modifies the camera matrix because OpenGL uses a different coordinate system and expects a transposed matrix which is shown below:
+\begin{verbatim}
+// get the transformation of the probe in voi coordinates
+Eigen::Matrix4d trans = m_probe->getTransformationInOtherCS(m_trackedVolumeImage);				
+Eigen::Matrix4d camera2gl;
+camera2gl <<  1, 0, 0, 0,
+              0, -1, 0, 0,
+              0, 0, -1, 0,
+              0, 0, 0, 1;
+trans = camera2gl * trans.inverse();
+Eigen::Matrix4d transT = trans.transpose();
+\end{verbatim}
 \graphic[scale=.5]{data}{Example for XML-data with annotations}
 
 
@@ -164,7 +177,7 @@ initSolidSphere(Vertex3D **triangleStripVertexHandle,
     GLfloat radius,
     GLuint slices, GLuint stacks)
 \end{verbatim}
-\graphic[scale=.5]{sphere}{Wireframe sphere and its constituents}
+\graphic[scale=.5]{sphere}{Wireframe sphere and its constituents \cite{wikipedia}}
 
 
 
