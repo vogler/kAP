@@ -95,7 +95,7 @@ The procedure of a SLNB is shown in \refFigure{slnb}. A SLNB is usually done at 
 %http://www.surgiceye.com/index.php?option=com_content&view=article&id=60&Itemid=66
 \paragraph*{Usage}
 The declipseSPECT system is a freehand SPECT system, which means that radioactive tracers are injected into the patient and the radiation is measured with a gamma probe. The advantage of declipseSPECT is that it tracks the patient and the probe and can compute a 3D reconstruction of the radiation \cite{wendler}.
-Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training effort (the procedure is very complex without visualization), quality control, automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs \cite{surgiceye}.
+Freehand SPECT systems are mainly used for lymphatic mapping in sentinel lymph node biopsy, especially for breast cancer \cite{buck}. Intra-operative 3D imaging has many clinical benefits: it allows for localization of SLN and minimally invasive access, less training effort (the procedure is very complex without visualization), quality control and automated documentation. This results in less morbidity, a shortened operation length and therefore reduced procedure costs \cite{surgiceye}.
 \paragraph*{Setup}
 The system combines a handheld 1D-gammaprobe with a camera tracking system. The tracking system tracks both the patient and the probe which have retro-reflective markers attached to them. This way, the position and angle of the probe in relation to the patient is known at all times (given that the markers aren't occluded). When using the probe to measure the radioactivity of a tracer in the region of interest, the position, angle and measurements of the probe are collected. Based on this data, a 3D reconstruction of the measured radiation can be computed.
 This data can then be used to augment the video stream from the tracking cameras' position (camera view). Another option is to show a virtual image from the probe's position (3D view).
@@ -164,7 +164,7 @@ Eigen::Matrix4d transT = trans.transpose();
 
 \subsection{Visualization of data}
 Visualization was done using OpenGL ES 1.1 which runs on all generations of the iPod Touch. OpenGL ES 2.0 uses vertex and fragment shaders but needs a certain version of iOS and only works on 3rd generation and newer.
-Since there is no framework like glut, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
+Since there is no framework like GLUT, the spheres had to be drawn manually. To initialize a sphere the function \verb|initSolidSphere| gets arrays in which the computed vertices of triangle fans and triangle strips will be stored, the radius of the sphere and how many stacks (horizontal) and slices (vertical) should be used.
 The difference between fans and strips is shown in \refFigure{sphere}.
 
 The signature of the function looks as follows:
