@@ -82,13 +82,14 @@ Since medical devices are typically safety-critical, they must meet specific req
 %\red{slnb beschreiben Wendler2010EurJNuclMedMolImaging}\\
 % http://www.cancer.gov/cancertopics/factsheet/detection/sentinel-node-biopsy
 % http://www.bupa.co.uk/individuals/health-information/directory/s/slnb
-The main use case for the declipseSPECT system is sentinel lymph node biopsy (SLNB). Sentinel lymph nodes are the lymph nodes to which cancer cells are most likely to spread from a primary tumor. Lymph nodes are part of the body's lymphatic system which is shown in \refFigure{lymphatic-system}. Many types of cancer spread through the lymphatic system and the earliest sites of spread are nearby lymph nodes, which are also called sentinel lymph nodes.
+The main use case for the declipseSPECT system (see section \ref{dspect}) is sentinel lymph node biopsy (SLNB). Sentinel lymph nodes are the lymph nodes to which cancer cells are most likely to spread from a primary tumor. Lymph nodes are part of the body's lymphatic system which is shown in \refFigure{lymphatic-system}. Many types of cancer spread through the lymphatic system and the earliest sites of spread are nearby lymph nodes, which are also called sentinel lymph nodes.
 The procedure of a SLNB is shown in \refFigure{slnb}. A SLNB is usually done at the same time the primary tumor is removed but it can also be done before or after.
 \graphic[scale=.7]{lymphatic-system}{The lymphatic system \cite{bupa}}
 \graphic[scale=.7]{slnb}{Sentinel lymph node biopsy of the breast \cite{cancer}}
 
 
 \subsection{declipseSPECT - a freehand SPECT system}
+\label{dspect}
 %Navab2008ISBINavigatedProbeOverview
 %Wendler2007MICCAIRecon
 %Wendler2010EurJNuclMedMolImaging
@@ -112,7 +113,7 @@ In this paper we introduce an addition to the declipseSPECT system that tries to
 
 
 \subsection{Approach}
-Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeon's field of view. In order to be properly integrated into the system, the screen mustn't be too big and needs to be attached to the probe in a way that doesn't obstruct the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactive hotspot, the currently measured radiation (cps) and a histogram of the previously measured radiation.
+Our approach is to visualize the important data from the terminal screen on a screen attached to the probe, so the data is always in the surgeon's field of view. In order to be properly integrated into the system, the screen mustn't be too big and needs to be attached to the probe in a way that doesn't obstruct the work of the surgeon. Due to these constraints we only show a select part of the data. We show a view similar to the 3D view on the terminal screen, i.e. the probe's point of view. It shows the hotspots of radioactivity as spheres of different color, depending on their intensity. In addition we display the distance to the nearest radioactive hotspot, the currently measured radiation (counts per second) and a histogram of the previously measured radiation.
 
 
 
